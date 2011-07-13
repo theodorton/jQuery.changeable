@@ -8,83 +8,82 @@
 (function($) {
     $.fn.changeable = function(overrides) {
         var defaults = {
-            contentType: 'text', // Can be text, link, picture
-            editBehaviour: 'dblclick', // Can be any event
+            // Pass any event
+            editBehaviour: 'dblclick',
+            // Pass a helper text
             helperText: 'Double-click to edit',
+            // Pass a classname that will be displayed on edit
             notifierClass: null,
+            // Saves the field on enter (doesn't push to server)
             saveOnEnter: true
         };
         var options = $.extend(defaults, overrides);
 
         return this.filter('input').each(function() {
             $this = $(this);
-            
+
             // Wrap around helper elements
-            $this.wrap('<div class="changable-container" />')
-                 .after(
-                     $('<div class="field-value" />')
-                     .html($this.attr('value'))
-                     .attr('title', options.helperText)
-                 )
-                 .wrap('<div class="field-input" />'); 
-            
+            $this.wrap('<div class="changable-container" />').after(
+            $('<div class="field-value" />').html($this.attr('value')).attr('title', options.helperText)).wrap('<div class="field-input" />');
+
             // Set styles and display
-            $changableContainer = $this.parent().parent();
-            $changableContainer.css('display', 'inline').children('div').css('display', 'inline');
-            $changableContainer.children('div.field-value').css('cursor', 'pointer');
-            $changableContainer.children('div.field-input').hide();
-            
+            $changeableContainer = $this.parent().parent();
+            $changeableContainer.css('display', 'inline').children('div').css('display', 'inline');
+            $changeableContainer.children('div.field-value').css('cursor', 'pointer');
+            $changeableContainer.children('div.field-input').hide();
+
             // Visual feedback
-            $changableContainer.children('div.field-value').hover(function(){
+            $changeableContainer.children('div.field-value').hover(function() {
                 $(this).css('background-color', '#dddddd');
-            }, function(){
+            }, function() {
                 $(this).css('background-color', '#ffffff');
             });
-            
+
             // Editing text
-            $changableContainer.children('div.field-value').bind(options.editBehaviour, function(){
+            $changeableContainer.children('div.field-value').bind(options.editBehaviour, function() {
                 $input = $(this).parent().children('div.field-input').show().children('input');
                 $input.focus();
                 $(this).hide();
             });
-            
+
             // Saving text (blur)
-            $changableContainer.find('input').blur(function(){
+            $changeableContainer.find('input').blur(function() {
                 $fieldValue = $(this).parent().siblings('div.field-value');
                 $fieldValue.html(this.value);
                 $fieldValue.show();
                 $(this).parent().hide();
             });
-            
+
             // Notify user
             if (options.notifierClass !== null) {
-                $changableContainer.find('input').blur(function(){
+                $changeableContainer.find('input').blur(function() {
                     if ($(this).attr('data-saved-value') != $(this).val()) {
                         $('.' + options.notifierClass).show();
                     }
                 });
-                
+
                 $('.' + options.notifierClass).hide();
             }
-            
+
             // Pressing enter to save
             if (options.saveOnEnter === true) {
-                $changableContainer.find('input').keyup(function(e){
-                    if(e.keyCode == 13) { $(this).blur(); }
+                $changeableContainer.find('input').keyup(function(e) {
+                    if (e.keyCode == 13) {
+                        $(this).blur();
+                    }
                 });
             }
-            
+
             // Preserving value / restoring
-            
             // Saving the value
-            $changableContainer.children('div.field-value').bind(options.editBehaviour, function(){
+            $changeableContainer.children('div.field-value').bind(options.editBehaviour, function() {
                 $input = $(this).parent().children('div.field-input').show().children('input');
                 $input.attr('data-saved-value', $input.val());
             });
-                                                           
+
             // Pressing escape to cancel
-            $changableContainer.find('input').keyup(function(e){
-                if(e.keyCode == 27) {
+            $changeableContainer.find('input').keyup(function(e) {
+                if (e.keyCode == 27) {
                     $(this).attr('value', $(this).attr('data-saved-value'));
                     $(this).blur();
                 }
