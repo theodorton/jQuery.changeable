@@ -1,7 +1,8 @@
 # jQuery Changeable Plugin
 Hide your form fields and make users edit by double-clicking a value label instead.
 
-## Example
+
+## Example #1
 
 __HTML:__
 
@@ -13,11 +14,44 @@ __HTML:__
 __JAVASCRIPT:__
 
 ```javascript
-$('form#my-form input').changeable();
+$(document).ready(function(){
+  $('form#my-form input').changeable();
+});
 ```
 
+## Example #2 (with options)
+
+__HTML:__
+
+```html
+<form id="my-form">
+  <input type="text" name="username" value="User name" class="changeable" />
+  
+  <div class="notify-on-save">
+    <p>
+      Looks like you've made som edits!
+      <input type="submit" value="Click here to save">
+    </p>
+  </div>
+</form>
+```
+
+__JAVASCRIPT:__
+
+```javascript
+$(document).ready(function(){
+  $('.changeable').changeable({
+    editBehaviour: 'click',
+    heĺperText:    'Click to edit this field! Then click outside to save.',
+    notifierClass: 'notify-on-save',
+    saveOnEnter:   false
+  });
+});
+```
+
+
 ## Options
-### editBehaviour (default: dblclick)
+### editBehaviour (default: 'dblclick')
 Can be any event type (click, mouseover) that jQuery bind() handles.
 
 ### helperText (default: 'Doubleclick to edit.')
@@ -28,6 +62,7 @@ A CSS class that will (initially be hidden) and showed when a user changes a fie
 
 ### saveOnEnter (default: true)
 Saves the field when the user presses enter key, if set to false enter will not do anything.
+
 
 ## License
 You may use this plugin for any non-commercial projects.
