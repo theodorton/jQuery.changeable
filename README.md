@@ -42,7 +42,7 @@ __JAVASCRIPT:__
 $(document).ready(function(){
   $('.changeable').changeable({
     editBehaviour: 'click',
-    heĺperText:    'Click to edit this field! Then click outside to save.',
+    helperText:    'Click to edit this field! Then click outside to save.',
     notifierClass: 'notify-on-save',
     saveOnEnter:   false
   });
