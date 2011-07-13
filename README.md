@@ -4,12 +4,14 @@ Hide your form fields and make users edit by double-clicking a value label inste
 ## Example
 
 __HTML:__
+
 ```html
 <form id="my-form">
   <input type="text" name="username" value="User name" />
 </form>
 ```
 __JAVASCRIPT:__
+
 ```javascript
 $('form#my-form input').changeable();
 ```
