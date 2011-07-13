@@ -67,7 +67,8 @@
 
             // Pressing enter to save
             if (options.saveOnEnter === true) {
-                $changeableContainer.find('input').keyup(function(e) {
+                $changeableContainer.find('input').keydown(function(e) {
+                    e.preventDefault();
                     if (e.keyCode == 13) {
                         $(this).blur();
                     }
