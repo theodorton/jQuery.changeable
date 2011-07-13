@@ -36,7 +36,7 @@
             $changeableContainer.children('div.field-value').hover(function() {
                 $(this).css('background-color', '#dddddd');
             }, function() {
-                $(this).css('background-color', '#ffffff');
+                $(this).css('background-color', 'inherit');
             });
 
             // Editing text
